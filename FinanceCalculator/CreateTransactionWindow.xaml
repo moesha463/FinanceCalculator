@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinanceCalculator"
         mc:Ignorable="d"
-        Title="CreateTransactionWindow" Height="250" Width="300" WindowStartupLocation="CenterScreen">
+        Title="Create Transaction" Height="250" Width="300" WindowStartupLocation="CenterScreen" Icon="/icon.png">
     <Grid>
         <Button Name="createTransactionModalButton" Content="Create Transaction" HorizontalAlignment="Left" VerticalAlignment="Top" Click="createTransactionModalButton_Click" Margin="49,186,0,0"/>
         <TextBox Name="transactionNameTextBox" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="198" Margin="49,48,0,0"/>
