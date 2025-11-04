@@ -45,5 +45,9 @@ namespace FinanceCalculator
                 MessageBox.Show($"{ex}");
             }
         }
+        private void cancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

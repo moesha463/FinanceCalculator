@@ -5,17 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinanceCalculator"
         mc:Ignorable="d"
-        Title="Finance Calculator" Height="450" Width="800" Icon="/icon.png">
+        Title="Finance Calculator" Height="450" Width="613" Icon="/icon.png">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <DataGrid Name="transactionsDataGrid" ItemsSource="{Binding Transactions}" IsReadOnly="True"  AutoGenerateColumns="False">
+        <DataGrid Name="transactionsDataGrid" ItemsSource="{Binding Transactions}" IsReadOnly="True"  AutoGenerateColumns="False" MouseDoubleClick="transactionsDataGrid_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding id}"/>
                 <DataGridTextColumn Header="Date" Binding="{Binding transactionDate}" />
@@ -31,7 +31,7 @@
         </DataGrid>
         <TextBlock Name="totalBalanceTextBox" Grid.Column="1" HorizontalAlignment="Left" Margin="92,15,0,0" TextWrapping="Wrap" Text="0,00" VerticalAlignment="Top"/>
         <Label Grid.Column="1" Content="Total Balance:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <WrapPanel Grid.Row="1">
+        <WrapPanel Grid.Row="1" HorizontalAlignment="Center" Margin="0,10,0,10">
             <Button Name="newTransactionButton" Content="New Transaction" Grid.Row="1" Click="newTransactionButton_Click" Width="100"/>
             <Button Name="importFromJsonButton" Content="Import JSON" Grid.Row="1" Click="importFromJsonButton_Click" Width="100"/>
             <Button Name="exportToJsonButton" Content="Export JSON" Grid.Row="1" Click="exportToJsonButton_Click" Width="100"/>

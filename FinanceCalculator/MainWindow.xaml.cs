@@ -22,7 +22,13 @@ namespace FinanceCalculator
         {
             InitializeComponent();
             transactionsDataGrid.ItemsSource = Transactions;
-            Transactions.CollectionChanged += (s, e) => UpdateTotalBalance();
+            Transactions.CollectionChanged += (s, e) => UpdateTotalInfo();
+        }
+
+        private void UpdateTotalInfo()
+        {
+            UpdateTotalBalance();
+            transactionsDataGrid.Items.Refresh();
         }
 
         public class Transaction
@@ -111,6 +117,24 @@ namespace FinanceCalculator
                     Transactions.Add(transaction);
                 }
             }
+        }
+        private void transactionsDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (transactionsDataGrid.SelectedItem != null)
+            {
+                EditTransactionModal editTransactionModal = new EditTransactionModal(this);
+                editTransactionModal.ShowDialog();
+            }
+        }
+
+        public void UpdateTransaction(int transactionId, string transaactionName, string transactionType, double transactionSum)
+        {
+            Transaction transaction = Transactions.First(t => t.id == transactionId);
+            transaction.transactionSum = transactionSum;
+            transaction.transactionType = transactionType;
+            transaction.transactionName = transaactionName;
+
+            UpdateTotalInfo();
         }
     }
 }
