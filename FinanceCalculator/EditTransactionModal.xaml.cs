@@ -17,12 +17,12 @@ namespace FinanceCalculator
     public partial class EditTransactionModal : Window
     {
         private MainWindow _mainWindow;
-        private MainWindow.Transaction transaction;
+        private Transaction transaction;
         public EditTransactionModal(MainWindow mainWindow)
         {
             _mainWindow = mainWindow;
             InitializeComponent();
-            transaction = (MainWindow.Transaction)mainWindow.transactionsDataGrid.SelectedItem;
+            transaction = (Transaction)mainWindow.transactionsDataGrid.SelectedItem;
             transactionNameTextBox.Text = transaction.transactionName;
             sumTextBox.Text = transaction.transactionSum.ToString();
             if (transaction.transactionType == "Profit")
