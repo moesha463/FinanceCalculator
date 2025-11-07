@@ -14,10 +14,10 @@ using System.Windows.Shapes;
 
 namespace FinanceCalculator
 {
-    public partial class CreateTransactionWindow : Window
+    public partial class CreateTransactionModal : Window
     {
         private MainWindow _mainWindow;
-        public CreateTransactionWindow(MainWindow mainWindow)
+        public CreateTransactionModal(MainWindow mainWindow)
         {
             InitializeComponent();
             _mainWindow = mainWindow;
@@ -29,6 +29,7 @@ namespace FinanceCalculator
             {
                 string transactionName = transactionNameTextBox.Text;
                 string? transactionType = null;
+                double transactionSum = Double.Parse(sumTextBox.Text);
                 foreach (RadioButton radioButton in transactionTypePanel.Children)
                 {
                     if (radioButton.IsChecked == true)
@@ -37,8 +38,8 @@ namespace FinanceCalculator
                         break;
                     }
                 }
-                double transactionSum = Double.Parse(sumTextBox.Text);
                 _mainWindow.CreateNewTransaction(transactionName, transactionType!, transactionSum);
+                Close();
             }
             catch (Exception ex)
             {

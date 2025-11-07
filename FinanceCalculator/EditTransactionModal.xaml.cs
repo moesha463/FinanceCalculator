@@ -36,7 +36,7 @@ namespace FinanceCalculator
         }
         private void editTransactionModalButton_Click(object sender, RoutedEventArgs e)
         {
-            int transactionId = transaction.id;
+            int transactionId = transaction.transactionId;
             string transactionName = transactionNameTextBox.Text;
             double transactionSum = double.Parse(sumTextBox.Text);
             string? transactionType = null;

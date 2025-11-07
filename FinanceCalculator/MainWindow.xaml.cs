@@ -24,23 +24,16 @@ namespace FinanceCalculator
             transactionsDataGrid.ItemsSource = Transactions;
             Transactions.CollectionChanged += (s, e) => UpdateTotalInfo();
         }
-
-        private void UpdateTotalInfo()
-        {
-            UpdateTotalBalance();
-            transactionsDataGrid.Items.Refresh();
-        }
-
         public class Transaction
         {
-            public int id { get; set; }
+            public int transactionId { get; set; }
             public string transactionDate { get; set; }
             public string transactionName { get; set; }
             public string transactionType { get; set; }
             public double transactionSum { get; set; }
             public Transaction()
             {
-                id = 0;
+                transactionId = 0;
                 transactionDate = DateTime.Now.ToString();
                 transactionName = "New Sneackers";
                 transactionType = "Description";
@@ -48,29 +41,20 @@ namespace FinanceCalculator
             }
             public Transaction(int id, string name, string description, double money)
             {
-                this.id = id;
+                this.transactionId = id;
                 transactionDate = DateTime.Now.ToString();
                 this.transactionName = name;
                 this.transactionType = description;
                 this.transactionSum = money;
             }
-
         }
+
         public ObservableCollection<Transaction> Transactions = new ObservableCollection<Transaction>();
-
-        private void newTransactionButton_Click(object sender, RoutedEventArgs e)
+        // Refreshing
+        private void UpdateTotalInfo()
         {
-            CreateTransactionWindow createTransactionWindow = new CreateTransactionWindow(this);
-            createTransactionWindow.ShowDialog();
-        }
-        public void CreateNewTransaction(string name, string description, double money)
-        {
-            int id;
-            if (transactionsDataGrid.Items.Count == 0)
-                id = 1;
-            else id = Transactions.Last().id+1;
-
-            Transactions.Add(new Transaction(id, name, description, money));
+            UpdateTotalBalance();
+            transactionsDataGrid.Items.Refresh();
         }
         private void UpdateTotalBalance()
         {
@@ -79,7 +63,39 @@ namespace FinanceCalculator
             );
             totalBalanceTextBox.Text = $"{totalBalance:F2}";
         }
+        // Transaction Manipulating
+        private void newTransactionButton_Click(object sender, RoutedEventArgs e)
+        {
+            CreateTransactionModal createTransactionWindow = new CreateTransactionModal(this);
+            createTransactionWindow.ShowDialog();
+        }
+        public void CreateNewTransaction(string name, string description, double money)
+        {
+            int id;
+            if (transactionsDataGrid.Items.Count == 0)
+                id = 1;
+            else id = Transactions.Last().transactionId+1;
 
+            Transactions.Add(new Transaction(id, name, description, money));
+        }
+        private void transactionsDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (transactionsDataGrid.SelectedItem != null)
+            {
+                EditTransactionModal editTransactionModal = new EditTransactionModal(this);
+                editTransactionModal.ShowDialog();
+            }
+        }
+        public void UpdateTransaction(int transactionId, string transaactionName, string transactionType, double transactionSum)
+        {
+            Transaction transaction = Transactions.First(t => t.transactionId == transactionId);
+            transaction.transactionSum = transactionSum;
+            transaction.transactionType = transactionType;
+            transaction.transactionName = transaactionName;
+
+            UpdateTotalInfo();
+        }
+        // Import/Export JSON
         private void exportToJsonButton_Click(object sender, RoutedEventArgs e)
         {
             string exportJson = JsonConvert.SerializeObject(Transactions);
@@ -118,23 +134,6 @@ namespace FinanceCalculator
                 }
             }
         }
-        private void transactionsDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (transactionsDataGrid.SelectedItem != null)
-            {
-                EditTransactionModal editTransactionModal = new EditTransactionModal(this);
-                editTransactionModal.ShowDialog();
-            }
-        }
 
-        public void UpdateTransaction(int transactionId, string transaactionName, string transactionType, double transactionSum)
-        {
-            Transaction transaction = Transactions.First(t => t.id == transactionId);
-            transaction.transactionSum = transactionSum;
-            transaction.transactionType = transactionType;
-            transaction.transactionName = transaactionName;
-
-            UpdateTotalInfo();
-        }
     }
 }
