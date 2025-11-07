@@ -8,26 +8,27 @@ namespace FinanceCalculator
 {
     public class Transaction
     {
-        public int transactionId { get; set; }
-        public string transactionDate { get; set; }
-        public string transactionName { get; set; }
-        public string transactionType { get; set; }
-        public double transactionSum { get; set; }
+        public int Id { get; set; }
+        public DateTime Date { get; set; }
+        public string DateString => Date.ToString("yyyy-MM-dd HH:mm");
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public double Amount { get; set; }
         public Transaction()
         {
-            transactionId = 0;
-            transactionDate = DateTime.Now.ToString();
-            transactionName = "New Sneackers";
-            transactionType = "Description";
-            transactionSum = 150.00;
+            Id = 0;
+            Date = DateTime.Now;
+            Name = "New Sneackers";
+            Type = "Description";
+            Amount = 150.00;
         }
-        public Transaction(int id, string name, string description, double money)
+        public Transaction(int id, string name, string type, double amount)
         {
-            this.transactionId = id;
-            transactionDate = DateTime.Now.ToString();
-            this.transactionName = name;
-            this.transactionType = description;
-            this.transactionSum = money;
+            this.Id = id;
+            Date = DateTime.Now;
+            this.Name = name;
+            this.Type = type;
+            this.Amount = amount;
         }
     }
 }

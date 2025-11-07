@@ -34,7 +34,7 @@ namespace FinanceCalculator
         private void UpdateTotalBalance()
         {
             double totalBalance = Transactions.Sum(t =>
-                t.transactionType == "Profit" ? t.transactionSum : -t.transactionSum
+                t.Type == "Profit" ? t.Amount : -t.Amount
             );
             totalBalanceTextBox.Text = $"{totalBalance:F2}";
         }
@@ -49,7 +49,7 @@ namespace FinanceCalculator
             int id;
             if (transactionsDataGrid.Items.Count == 0)
                 id = 1;
-            else id = Transactions.Last().transactionId+1;
+            else id = Transactions.Last().Id+1;
 
             Transactions.Add(new Transaction(id, name, description, money));
         }
@@ -63,10 +63,10 @@ namespace FinanceCalculator
         }
         public void UpdateTransaction(int transactionId, string transaactionName, string transactionType, double transactionSum)
         {
-            Transaction transaction = Transactions.First(t => t.transactionId == transactionId);
-            transaction.transactionSum = transactionSum;
-            transaction.transactionType = transactionType;
-            transaction.transactionName = transaactionName;
+            Transaction transaction = Transactions.First(t => t.Id == transactionId);
+            transaction.Amount = transactionSum;
+            transaction.Type = transactionType;
+            transaction.Name = transaactionName;
 
             UpdateTotalInfo();
         }

@@ -17,11 +17,11 @@
         </Grid.ColumnDefinitions>
         <DataGrid Name="transactionsDataGrid" ItemsSource="{Binding Transactions}" IsReadOnly="True"  AutoGenerateColumns="False" MouseDoubleClick="transactionsDataGrid_MouseDoubleClick">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding transactionId}"/>
-                <DataGridTextColumn Header="Date" Binding="{Binding transactionDate}" />
-                <DataGridTextColumn Header="Name" Binding="{Binding transactionName}" />
-                <DataGridTextColumn Header="Type" Binding="{Binding transactionType}" />
-                <DataGridTextColumn Header="Sum" Binding="{Binding transactionSum}" />
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding DateString}" />
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Type" Binding="{Binding Type}" />
+                <DataGridTextColumn Header="Sum" Binding="{Binding Amount}" />
             </DataGrid.Columns>
             <DataGrid.RowStyle>
                 <Style>

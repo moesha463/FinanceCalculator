@@ -23,9 +23,9 @@ namespace FinanceCalculator
             _mainWindow = mainWindow;
             InitializeComponent();
             transaction = (Transaction)mainWindow.transactionsDataGrid.SelectedItem;
-            transactionNameTextBox.Text = transaction.transactionName;
-            sumTextBox.Text = transaction.transactionSum.ToString();
-            if (transaction.transactionType == "Profit")
+            transactionNameTextBox.Text = transaction.Name;
+            sumTextBox.Text = transaction.Amount.ToString();
+            if (transaction.Type == "Profit")
             {
                 profitRadioButton.IsChecked = true;
             }
@@ -36,21 +36,29 @@ namespace FinanceCalculator
         }
         private void editTransactionModalButton_Click(object sender, RoutedEventArgs e)
         {
-            int transactionId = transaction.transactionId;
-            string transactionName = transactionNameTextBox.Text;
-            double transactionSum = double.Parse(sumTextBox.Text);
-            string? transactionType = null;
-            foreach (RadioButton radioButton in transactionTypePanel.Children) 
+            try
             {
-                if (radioButton.IsChecked == true)
-                {
-                    transactionType = radioButton.Content.ToString();
-                    break;
-                }
-            }
-            _mainWindow.UpdateTransaction(transactionId, transactionName, transactionType!, transactionSum);
+                int id = transaction.Id;
+                string name = transactionNameTextBox.Text;
+                if (string.IsNullOrEmpty(name))
+                    throw new Exception("the transaction name field is empty.");
+                double amount;
+                if (double.TryParse(name, out double _amount) && _amount >= 0)
+                    amount = _amount;
+                else
+                    throw new Exception("the amount input is incorrect.");
+                string? type = transactionTypePanel.Children.OfType<RadioButton>()
+                    .FirstOrDefault(c => c.IsChecked == true)?.Content.ToString();
+                if (transaction.Type == null)
+                    throw new Exception("the transaction type field is empty");
+                _mainWindow.UpdateTransaction(id, name, type!, amount);
 
-            Close();
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void cancelButton_Click(object sender, RoutedEventArgs e)
         {

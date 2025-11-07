@@ -27,23 +27,24 @@ namespace FinanceCalculator
         {
             try
             {
-                string transactionName = transactionNameTextBox.Text;
-                string? transactionType = null;
-                double transactionSum = Double.Parse(sumTextBox.Text);
-                foreach (RadioButton radioButton in transactionTypePanel.Children)
-                {
-                    if (radioButton.IsChecked == true)
-                    {
-                        transactionType = radioButton.Content.ToString();
-                        break;
-                    }
-                }
-                _mainWindow.CreateNewTransaction(transactionName, transactionType!, transactionSum);
+                string name = transactionNameTextBox.Text;
+                if (string.IsNullOrWhiteSpace(name))
+                    throw new Exception("the transaction name field is empty.");
+                double amount;
+                if (double.TryParse(sumTextBox.Text, out double _amount) && _amount >= 0)
+                    amount = _amount;
+                else
+                    throw new Exception("the amount input is incorrect.");
+                string? type = transactionTypePanel.Children.OfType<RadioButton>()
+                    .FirstOrDefault(c => c.IsChecked == true)?.Content.ToString();
+                if (type == null)
+                    throw new Exception("the transaction type field is empty");
+                _mainWindow.CreateNewTransaction(name, type!, amount);
                 Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ex}");
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void cancelButton_Click(object sender, RoutedEventArgs e)
